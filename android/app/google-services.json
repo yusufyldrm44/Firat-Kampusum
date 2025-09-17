@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "443590572135",
+    "project_id": "kampusumyeni",
+    "storage_bucket": "kampusumyeni.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443590572135:android:775354aa715ec10c46bcc2",
+        "android_client_info": {
+          "package_name": "com.example.kampusum_yeni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNosFWRUNrIpjXLS3jwaareuImYMG2dRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
+import 'package:provider/provider.dart';
 import 'splash_screen.dart';
-import 'admin_login_page.dart';
 import 'initialize_data.dart';
+import 'theme_provider.dart';
 
 import 'login_page.dart';
 import 'profile_edit_page.dart';
@@ -35,22 +36,24 @@ void main() async {
   // Yeni fakülte ve derslik verilerini yüklemek için geçici olarak aktif
   // await InitializeData.resetAndInitializeData();
   
-  runApp(KampusumApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: KampusumApp(),
+    ),
+  );
 }
 
 class KampusumApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    
     return MaterialApp(
       title: 'Fırat Üniversitesi Kampüsüm',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF8B0000), // Koyu kırmızı
-          foregroundColor: Colors.white,
-        ),
-      ),
+      theme: ThemeProvider.lightTheme,
+      darkTheme: ThemeProvider.darkTheme,
+      themeMode: themeProvider.themeMode,
       home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -302,6 +305,23 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(builder: (context) => AcademicCalendarPage()),
               );
             }),
+            Divider(),
+            // Tema Değiştirme
+            Consumer<ThemeProvider>(
+              builder: (context, themeProvider, child) {
+                return SwitchListTile(
+                  title: Text('Koyu Tema'),
+                  subtitle: Text('Karanlık mod açık/kapalı'),
+                  value: themeProvider.isDarkMode,
+                  onChanged: (value) {
+                    themeProvider.toggleTheme();
+                  },
+                  secondary: Icon(
+                    themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
